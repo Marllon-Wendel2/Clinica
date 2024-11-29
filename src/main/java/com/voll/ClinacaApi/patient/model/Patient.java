@@ -1,6 +1,7 @@
 package com.voll.ClinacaApi.patient.model;
 
 import com.voll.ClinacaApi.Address.model.Address;
+import com.voll.ClinacaApi.patient.dtos.DataUpadatePatient;
 import com.voll.ClinacaApi.patient.dtos.PatientData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class Patient {
     private String email;
     private String telefone;
     private String cpf;
+    private Boolean ativo;
 
     @Embedded
     private Address endereco;
@@ -33,5 +35,18 @@ public class Patient {
         this.telefone = patientData.telefone();
         this.cpf = patientData.cpf();
         this.endereco = new Address(patientData.endereco());
+    }
+
+    public void updateInformation(DataUpadatePatient data) {
+        if(data.nome() != null) {
+            this.nome = data.nome();
+        }
+        if (data.telefone() != null) {
+            this.telefone = data.telefone();
+        }
+    }
+
+    public void deletePatient() {
+        this.ativo = false;
     }
 }
