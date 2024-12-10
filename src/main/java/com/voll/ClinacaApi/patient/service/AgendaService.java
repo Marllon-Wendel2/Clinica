@@ -24,7 +24,7 @@ public class AgendaService {
 
     public void agendar(DataConsult dataConsult) {
         if(dataConsult.idDoctor() == null) {
-            choiceRandomDoctor();
+            choiceRandomDoctor(dataConsult);
             verifyPatient(dataConsult.idPacient());
         } else {
         verifyDoctor(dataConsult.idDoctor());
