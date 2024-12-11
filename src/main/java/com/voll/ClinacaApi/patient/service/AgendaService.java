@@ -1,14 +1,18 @@
 package com.voll.ClinacaApi.patient.service;
 
 import com.voll.ClinacaApi.Consultation.dtos.DataConsult;
+import com.voll.ClinacaApi.Consultation.dtos.DatailsOfConsult;
 import com.voll.ClinacaApi.Consultation.model.Consultion;
-import com.voll.ClinacaApi.Consultation.repository.dtos.ConsultRepository;
+import com.voll.ClinacaApi.Consultation.repository.ConsultRepository;
+import com.voll.ClinacaApi.Consultation.validation.ValidatorConsult;
 import com.voll.ClinacaApi.doctor.model.Doctor;
 import com.voll.ClinacaApi.doctor.repository.DoctorRepository;
 import com.voll.ClinacaApi.patient.repository.PatientRepository;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AgendaService {
@@ -22,7 +26,10 @@ public class AgendaService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public void agendar(DataConsult dataConsult) {
+    @Autowired
+    private List<ValidatorConsult> validators;
+
+    public DatailsOfConsult agendar(DataConsult dataConsult) {
         if(dataConsult.idDoctor() == null) {
             choiceRandomDoctor(dataConsult);
             verifyPatient(dataConsult.idPacient());
@@ -31,12 +38,16 @@ public class AgendaService {
         verifyPatient(dataConsult.idPacient());
         }
 
+        validators.forEach(v -> v.validate(dataConsult));
+
         var patient = patientRepository.findById(dataConsult.idPacient()).get();
         var doctor = doctorRepository.findById(dataConsult.idDoctor()).get();
 
         var consult = new Consultion(null, doctor, patient, dataConsult.data());
 
         consultRepository.save(consult);
+
+        return new DatailsOfConsult(consult);
     }
 
     private Doctor choiceRandomDoctor(DataConsult dataConsult) {

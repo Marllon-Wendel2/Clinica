@@ -1,5 +1,6 @@
 package com.voll.ClinacaApi.Consultation.dtos;
 
+import com.voll.ClinacaApi.Consultation.model.Consultion;
 import com.voll.ClinacaApi.doctor.dtos.Especialidade;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
@@ -17,5 +18,6 @@ public record DataConsult(
         LocalDateTime data,
 
         Especialidade especialidade) {
+
 
 }

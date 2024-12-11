@@ -2,10 +2,12 @@ package com.voll.ClinacaApi.Consultation.validation;
 
 import com.voll.ClinacaApi.Consultation.dtos.DataConsult;
 import jakarta.validation.ValidationException;
+import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 
-public class ValidateHour {
+@Component
+public class ValidateHour implements ValidatorConsult {
 
     public void validate(DataConsult dataConsult) {
         var dateConsult = dataConsult.data();

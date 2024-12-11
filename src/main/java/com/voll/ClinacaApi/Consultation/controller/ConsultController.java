@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("consultation")
 public class ConsultController {
+
     @Autowired
     private AgendaService agendaService;
 
     @PostMapping
     @Transactional
     public ResponseEntity setTimetoConsult(@RequestBody @Valid DataConsult data) {
-        agendaService.agendar(data);
-        return ResponseEntity.ok(new DatailsOfConsult(null, null,null,null));
+        var dto = agendaService.agendar(data);
+        return ResponseEntity.ok(dto);
     }
 }

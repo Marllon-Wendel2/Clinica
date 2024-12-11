@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     @Query("""
-            select d from Doctor d
+            select d from Doctors d
             where
             d.especialidade = :especialidade
             and
